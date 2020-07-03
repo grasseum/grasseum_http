@@ -1,0 +1,23 @@
+{
+  "name": "grasseum_http",
+  "version": "1.0.0",
+  "description": "Library for Grasseum http",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "API build library"
+  ],
+  "dependencies": {},
+  "author": "Pein Freccs",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grasseum/grasseum_http.git"
+  },
+  "bugs": {
+    "url": "https://github.com/grasseum/grasseum_http/issues"
+  },
+  "homepage": "https://github.com/grasseum/grasseum_http#readme"
+}
