@@ -1,6 +1,6 @@
 {
   "name": "grasseum_http",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "description": "Library for Grasseum http",
   "main": "index.js",
   "scripts": {
