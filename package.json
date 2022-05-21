@@ -4,12 +4,21 @@
   "description": "Library for Grasseum http",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "es_linter": "eslint   *.js --fix"
   },
   "keywords": [
     "API build library"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "fornetserve": "^0.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.16.0",
+    "eslint-config-strongloop": "^2.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "esm": "^3.2.25",
+    "mocha": "^5.2.0"
+  },
   "author": "Pein Freccs",
   "license": "MIT",
   "repository": {

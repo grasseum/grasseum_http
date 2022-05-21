@@ -1,31 +1,53 @@
-const grasseumCore = require("grasseum_core"); 
-var compt = require("compts");
-const http = require('http');
+const grasseumConsole = require("grasseum_console");
+const structkit = require("structkit");
+const core = require("./core");
+const {https,http} = require("fornetserve");
 
-var url = require("url");
-exports.run_server = function( grasseum_stream,action ){
-    let default_port = 8080;
-    var getcwd = grasseumCore.terminal().getCwdParameter(action.argv.argv);
-
-    if(compt._.has( getcwd,"port" )){
-        default_port = parseInt(getcwd["port"]);
-    }
-
-    const requestListener = function (req, res) {
-     
-      const remove_slash = url.parse(req.url).pathname.replace(/\//g,"");
-
-     
-  
-      
-      grasseum_stream.execute_pipe_name_only(remove_slash,action);
-      grasseum_stream.prepare_execute(grasseum_stream.getListLoad()["execute"]);
-      res.writeHead(200);
-      res.end('Hello, Your stream is now working, this is a trial feature, new improvements will come along the way.');
-    }
-    
-    const server = http.createServer(requestListener);
-    server.listen(default_port,'127.0.0.1',function(err){
-        console.log(err,"err");
-    });
+let routeConfig=[];
+exports.http_route = function () {
+    routeConfig = [];
+    return {
+        get:(route,config)=>{
+            core.routedValidation( routeConfig,route,"get",config );
+        },  
+        post:(route,config)=>{
+            core.routedValidation( routeConfig,route,"post",config );
+        }
+    } 
 }
+exports.run_server = function (grasseum_stream, action) {
+
+    let default_host = '0.0.0.0';
+    let default_port = 4040;
+    let serverTypes = "http";
+    const getcwd = grasseumConsole.getCwdParameter(action.argv.argv);
+
+    if (structkit.has(getcwd, "port")) {
+
+        default_port = parseInt(getcwd.port);
+
+    }
+    if (structkit.has(getcwd, "host")) {
+
+        default_host = getcwd.host;
+
+    }
+    if (structkit.has(getcwd, "servertype")) {
+
+        serverTypes = getcwd.servertype;
+
+    }
+
+
+    const http_align = core.http_align(routeConfig ,grasseum_stream,action);
+
+    if (serverTypes==="http")
+        http(http_align,{host:default_host,port:default_port})
+    if (serverTypes==="https")
+        https(http_align,{host:default_host,port:default_port})
+    if (serverTypes==="http_and_https"){
+        http(http_align,{host:default_host,port:default_port})
+        https(http_align,{host:default_host,port:default_port})
+    }
+
+};
